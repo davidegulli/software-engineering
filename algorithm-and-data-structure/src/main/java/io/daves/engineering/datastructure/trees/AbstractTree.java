@@ -1,18 +1,10 @@
 package io.daves.engineering.datastructure.trees;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class AbstractTree<E> implements Tree<E>{
-
-    Position<E> root;
-
-    public AbstractTree(Position<E> root) {
-        this.root = root;
-    }
-
-    public Position<E> getRoot() {
-        return root;
-    }
 
     @Override
     public boolean isExternal(Position<E> position) {
@@ -25,43 +17,123 @@ public abstract class AbstractTree<E> implements Tree<E>{
     }
 
     @Override
-    public int size() {
-        return 0;
-        //return positions();
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /**
+     * The depth of a position is the level of the tree where the position is placed.
+     *
+     * The complexity of the method is O(d_p + 1), where d_p is the depth of the parent position.
+     * The worst case the complexity is O(n), if all the internal nodes have only one child.
+     *
+     * @return An integer representing the position's depth.
+     */
+    public int depth(Position<E> position) throws IllegalArgumentException {
+        if(isRoot(position)) {
+            return 0;
+        } else {
+            return depth(parent(position)) + 1;
+        }
+    }
+
+    /**
+     * The height of s tree is the max depth that an external position of the tree can have.
+     *
+     * The complexity of the method for the worst cae is O(n)
+     *
+     * @return An integer representing the height of the subtree passed as parameter
+     */
+    public int height(Position<E> root) {
+        int height = 0;
+        for (Position<E> position : children(root)) {
+            height = Math.max(height, (1 + height(position)));
+        }
+
+        return height;
+    }
+
+    public Iterator<E> iterator() {
+        return new ElementIterator();
+    }
+
+    private class ElementIterator implements Iterator<E> {
+
+        Iterator<Position<E>> positionIterator = positions().iterator();
+
+        @Override
+        public boolean hasNext() {
+            return positionIterator.hasNext();
+        }
+
+        @Override
+        public E next() {
+            return positionIterator.next().getElement();
+        }
+
+        @Override
+        public void remove() {
+            positionIterator.remove();
+        }
     }
 
     @Override
     public Iterable<Position<E>> positions() {
-        ArrayList<Position<E>> allPositions = new ArrayList<>();
+        return preOrder();
+    }
 
-        preorder(root, allPositions);
-        return allPositions;
+    @Override
+    public Iterable<E> elements() {
+        ArrayList<E> elements = new ArrayList<>();
+        for (Position<E> position : positions()) {
+            elements.add(position.getElement());
+        }
+        return elements;
     }
 
     /**
-     * It will have to be improved at the moment its complexity is O(n^2)
-     * @return Iterable<E>
+     * The complexity of the method is O(n)
+     *
+     * @return Return a preorder iterable list, for a tree T, it will visit the root as first position
+     * and then all the children subtrees from left to right, for all the subtrees within T.
      */
-    @Override
-    public Iterable<E> elements() {
-        ArrayList<E> result = new ArrayList<>();
-        for (Position<E> position : positions()) {
-            result.add(position.getElement());
-        }
-
-        return result;
+    public Iterable<Position<E>> preOrder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        preorderSubtree(snapshot, root());
+        return snapshot;
     }
 
-    private void preorder(Position<E> position, ArrayList<Position<E>> positions) {
+    private void preorderSubtree(List<Position<E>> snapshot, Position<E> position) {
         if(position == null) {
             return;
         }
 
-        for(Position<E> child : children(position)) {
-            preorder(child, positions);
+        snapshot.add(position);
+        for(Position<E> child: children(position)) {
+            preorderSubtree(snapshot, child);
         }
-
-        positions.add(position);
     }
 
+    /**
+     * The complexity of the method is O(n)
+     *
+     * @return Return a postOrder iterable list, for a tree T, for each subtree within T, it will visit all the
+     * children subtrees from left to right belonging to the root and as last position it will visit the root.
+     */
+    public Iterable<Position<E>> postOrder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        postOrderSubtree(snapshot, root());
+        return snapshot;
+    }
+
+    private void postOrderSubtree(List<Position<E>> snapshot, Position<E> position) {
+        if(position == null) {
+            return;
+        }
+
+        for(Position<E> child: children(position)) {
+            postOrderSubtree(snapshot, child);
+        }
+        snapshot.add(position);
+    }
 }

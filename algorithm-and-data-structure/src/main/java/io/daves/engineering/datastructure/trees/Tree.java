@@ -1,15 +1,14 @@
 package io.daves.engineering.datastructure.trees;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 public interface Tree<E> extends Iterable<E> {
 
     Position<E> root();
 
-    Position<E> parent(Position<E> position);
+    Position<E> parent(Position<E> position) throws IllegalArgumentException;
 
-    Collection<Position<E>> children(Position<E> position);
+    Iterable<Position<E>> children(Position<E> position) throws IllegalArgumentException;
 
     int numberOfChildren(Position<E> position);
 
