@@ -6,6 +6,10 @@ public interface Tree<E> extends Iterable<E> {
 
     Position<E> root();
 
+    int depth(Position<E> position);
+
+    int height(Position<E> position);
+
     Position<E> parent(Position<E> position) throws IllegalArgumentException;
 
     Iterable<Position<E>> children(Position<E> position) throws IllegalArgumentException;

@@ -29,6 +29,7 @@ public abstract class AbstractTree<E> implements Tree<E>{
      *
      * @return An integer representing the position's depth.
      */
+    @Override
     public int depth(Position<E> position) throws IllegalArgumentException {
         if(isRoot(position)) {
             return 0;
@@ -44,6 +45,7 @@ public abstract class AbstractTree<E> implements Tree<E>{
      *
      * @return An integer representing the height of the subtree passed as parameter
      */
+    @Override
     public int height(Position<E> root) {
         int height = 0;
         for (Position<E> position : children(root)) {
@@ -135,5 +137,26 @@ public abstract class AbstractTree<E> implements Tree<E>{
             postOrderSubtree(snapshot, child);
         }
         snapshot.add(position);
+    }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        printInOrder(root(), 0, result);
+        return result.toString();
+    }
+
+    private void printInOrder(Position<E> position, Integer depth, StringBuilder printStream) {
+        printStream.append(spaces(depth)).append(position.getElement()).append("\n");
+        for (Position<E> child : children(position)) {
+            printInOrder(child, (depth + 1), printStream);
+        }
+    }
+
+    private String spaces(Integer factor) {
+        StringBuilder spaces = new StringBuilder();
+        for (int i = 0; i < factor; i++) {
+            spaces.append("  ");
+        }
+        return spaces.toString();
     }
 }

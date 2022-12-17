@@ -1,8 +1,5 @@
 package io.daves.engineering.datastructure.trees;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     public Node<E> createNode(E element, Node<E> parent, Node<E> left, Node<E> right) {
@@ -36,19 +33,19 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     @Override
     public Position<E> parent(Position<E> position) throws IllegalArgumentException {
         Node<E> node = validate(position);
-        return parent(position);
+        return node.getParent();
     }
 
     @Override
     public Position<E> left(Position<E> position) throws IllegalArgumentException {
         Node<E> node = validate(position);
-        return left(position);
+        return node.getLeft();
     }
 
     @Override
     public Position<E> right(Position<E> position) throws IllegalArgumentException {
         Node<E> node = validate(position);
-        return right(position);
+        return node.getRight();
     }
 
     public Position<E> addRoot(E element) {
