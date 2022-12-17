@@ -1,16 +1,15 @@
 package io.daves.engineering.algorithm.depth_first_search;
 
-import io.daves.engineering.datastructure.trees.LinkedBinaryTree;
 import io.daves.engineering.datastructure.trees.Position;
 import io.daves.engineering.datastructure.trees.Tree;
-
-import java.util.ArrayList;
-import java.util.List;
+import io.daves.engineering.util.BinaryTreeUtilities;
 
 public class DepthFirstSearcher {
 
+    private static Integer[] sampleDataset = { 3, 12, 5, 8, 19, 6, 9, 4, 13, 18, 15, 7, 9, 11, 17, 21, 14, 2, 1, 20};
+
     public static void main(String[] args) {
-        Tree<Integer> sampleTree = buildSampleTree();
+        Tree<Integer> sampleTree = BinaryTreeUtilities.buildSampleTree(sampleDataset);
         System.out.println(sampleTree);
 
         DepthFirstSearcher searcher = new DepthFirstSearcher();
@@ -53,27 +52,4 @@ public class DepthFirstSearcher {
         return result;
     }
 
-    private static Tree<Integer> buildSampleTree() {
-        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
-
-        List<Position<Integer>> nodes = new ArrayList<>(25);
-        nodes.add(tree.addRoot(getValue(0)));
-
-        for (int i = 1; i <= 18; i++) {
-            Position<Integer> parent = i > 2 ? nodes.get((i - 1) / 2) : nodes.get(0);
-            nodes.add(tree.addLeft(parent, getValue(i)));
-
-            i++;
-            parent = i > 2 ? nodes.get((i - 2) / 2) : nodes.get(0);
-            nodes.add(tree.addRight(parent, getValue(i)));
-        }
-
-        return tree;
-    }
-
-    private static Integer getValue(int i) {
-        return sampleDataset[i];
-    }
-
-    private static Integer[] sampleDataset = { 3, 12, 5, 8, 19, 6, 9, 4, 13, 18, 15, 7, 9, 11, 17, 21, 14, 2, 1, 20};
 }
