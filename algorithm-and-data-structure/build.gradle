@@ -1,10 +1,11 @@
 plugins {
     id 'application'
 }
-apply plugin : "java"
+apply plugin: 'base'
+apply plugin : 'java'
 
 group 'io.daves.engineering'
-version '1.0-SNAPSHOT'
+version ''
 
 repositories {
     mavenCentral()
@@ -18,6 +19,34 @@ application {
     mainClassName = javaMainClass
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+task copySources(type: Copy) {
+    from 'src/main/java'
+    into 'build/classes/java/main'
+}
+
+task copyFile(type: Copy) {
+    from 'documents/templates/readme.template.md'
+    into 'build/classes/java/main'
+    rename {
+        String fileName ->
+            fileName.replace("readme.template.md", "readme.md")
+    }
+}
+
+task zip(type: Zip) {
+    from 'build/classes/java/main'
+    baseName 'esercitazione'
+    includeEmptyDirs false
+}
+
 dependencies {
     implementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
@@ -26,3 +55,6 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+assemble.dependsOn copySources
+assemble.dependsOn copyFile
