@@ -1,4 +1,4 @@
-# Lesson 29 - Attraversamenti di un grafo
+# Lesson 31 - Grafi: cammini minimi
 
 ### Instructions to run the exercises application
 
@@ -7,12 +7,7 @@ __Requirements:__ The application require the jdk 1.8 to be executed
 In order to execute the main classes of the solved exercises, it needs to run the following commands:
 
 
-Depth First Searcher exercise:
+Dijkstra algorithm implementation exercise:
 ```bash
-$ java io.daves.engineering.algorithms.depth_first_search.DepthFirstSearcher
-```
-
-Breadth First Searcher exercise:
-```bash
-$ java io.daves.engineering.algorithms.breadth_first_search.BreadthFirstSearcher
+$ java io.daves.engineering.algorithms.dijkstra.DijkstraResolver
 ```
