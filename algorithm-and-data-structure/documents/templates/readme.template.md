@@ -1,4 +1,4 @@
-# Lesson 31 - Grafi: cammini minimi
+# Lesson 34 - Sorting: Mergesort
 
 ### Instructions to run the exercises application
 
@@ -9,5 +9,5 @@ In order to execute the main classes of the solved exercises, it needs to run th
 
 Dijkstra algorithm implementation exercise:
 ```bash
-$ java io.daves.engineering.algorithms.dijkstra.DijkstraResolver
+$ java io.daves.engineering.algorithms.sorting.MergeSort
 ```
