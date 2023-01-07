@@ -1,4 +1,4 @@
-# Lesson 34 - Sorting: Mergesort
+# Lesson 35 - Sorting: Quicksort
 
 ### Instructions to run the exercises application
 
@@ -9,5 +9,5 @@ In order to execute the main classes of the solved exercises, it needs to run th
 
 Dijkstra algorithm implementation exercise:
 ```bash
-$ java io.daves.engineering.algorithms.sorting.MergeSort
+$ java io.daves.engineering.algorithms.sorting.QuickSort
 ```
